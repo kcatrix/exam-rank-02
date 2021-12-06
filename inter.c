@@ -6,11 +6,12 @@
 /*   By: kcatrix <kcatrix@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 13:34:14 by kcatrix           #+#    #+#             */
-/*   Updated: 2021/12/06 13:40:52 by kcatrix          ###   ########.fr       */
+/*   Updated: 2021/12/06 13:57:22 by kcatrix          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 
 void	ft_inter(char *str, char *str2)
 {
@@ -23,10 +24,12 @@ void	ft_inter(char *str, char *str2)
 		i++;
 	}
 }
-int main()
+int main(int argc, char **argv)
 {
-    char chaine[] = "jesui";
-    char chaine2[] = "sasas";
-
-    ft_inter(chaine, chaine2);
+	int i;
+	
+	i = 1;
+	if (argc != 3)
+		return (0);
+    ft_inter(argv[i], argv[i + 1]);
 }
