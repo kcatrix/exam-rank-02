@@ -6,7 +6,7 @@
 /*   By: kcatrix <kcatrix@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 13:34:14 by kcatrix           #+#    #+#             */
-/*   Updated: 2021/12/06 15:40:17 by kcatrix          ###   ########.fr       */
+/*   Updated: 2021/12/06 15:50:22 by kcatrix          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_inter(char *str, char *str2)
 	int i;
 	int y;
 	int z;
-	char *res;
+	char res[100];
 
 	i = 0;
 	y = 0;
