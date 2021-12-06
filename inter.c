@@ -6,7 +6,7 @@
 /*   By: kcatrix <kcatrix@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 13:34:14 by kcatrix           #+#    #+#             */
-/*   Updated: 2021/12/06 13:57:22 by kcatrix          ###   ########.fr       */
+/*   Updated: 2021/12/06 14:02:53 by kcatrix          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	
 	i = 1;
 	if (argc != 3)
-		return (0);
-    ft_inter(argv[i], argv[i + 1]);
+		write(1,"\n",2);
+	else
+    	ft_inter(argv[i], argv[i + 1]);
 }
