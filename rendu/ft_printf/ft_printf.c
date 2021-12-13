@@ -3,28 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcatrix <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: kevyn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 11:13:20 by kcatrix           #+#    #+#             */
-/*   Updated: 2021/12/07 15:07:36 by kcatrix          ###   ########.fr       */
+/*   Created: 2021/12/13 11:36:21 by kevyn             #+#    #+#             */
+/*   Updated: 2021/12/13 12:31:38 by kevyn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdarg.h>
 
 int glo;
 
-int	ft_putnbr(int nb)
+void	ft_putstr(char *str)
 {
-	char	b;
+	int i;
 
+	i = 0;
+	while(str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+		glo++;
+	}
+}
+
+void	ft_putnbr(int nb)
+{
+	char b;
+	
+	if (nb == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		glo = glo + 11;
+		return ;
+	}
 	if (nb < 0)
 	{
+		nb = nb * -1;
 		write(1, "-", 1);
 		glo++;
-		nb = nb * (-1);
 	}
 	if (nb >= 0 && nb <= 9)
 	{
@@ -37,68 +55,51 @@ int	ft_putnbr(int nb)
 		ft_putnbr(nb / 10);
 		ft_putnbr(nb % 10);
 	}
-	return(glo);
 }
 
-int	ft_putnbr_base(int nb, char *base)
+void	ft_putnbr_base(int nb, char *base)
 {
-	if (nb <= 15)
+	if (nb >= 0 && nb <= 15)
 	{
 		write(1, &base[nb], 1);
 		glo++;
 	}
-	if (nb > 15)
+	else
 	{
-		ft_putnbr_base(nb / 16, base);
+		ft_putnbr_base(nb / 16, base) ;
 		ft_putnbr_base(nb % 16, base);
 	}
-	return (glo);
 }
 
-int ft_putstr(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-		glo++;
-	}
-	return (glo);
-}
-
-int	ft_convert(char val, void *param)
+void	ft_convert(char val, void *param)
 {
 	if (val == 's')
 		ft_putstr((char *)param);
-	else if (val == 'd')
+	if (val == 'd')
 		ft_putnbr((int)param);
-	else if (val == 'x')
-		ft_putnbr_base((long)param, "0123456789ABCDEF");
-	return (glo);
+	if (val == 'x')
+		ft_putnbr_base((int)param, "0123456789abcdef");
 }
 
-int ft_printf(const char *arg, ...)
+int		ft_printf(const char *arg, ...)
 {
 	int i;
+	va_list ap;
 
 	i = 0;
-	va_list ap;
-	
 	va_start(ap, arg);
 	while(arg[i])
 	{
 		if (arg[i] == '%' && arg[i + 1] != '%')
 		{
 			i++;
-			ft_convert(arg[i],va_arg(ap, void *));
+			ft_convert(arg[i], va_arg(ap, void *));
 		}
 		else if (arg[i] == '%' && arg[i + 1] == '%')
 		{
-			write(1, "%", 1);
 			i++;
+			write(1, "%", 1);
+			glo++;
 		}
 		else
 		{
@@ -106,12 +107,8 @@ int ft_printf(const char *arg, ...)
 			glo++;
 		}
 		i++;
-
 	}
-	return(glo);
+	va_end(ap);
+	return (glo);
+}
 
-}
-int	main()
-{
-	printf("%d", ft_printf("%d",123456));
-}

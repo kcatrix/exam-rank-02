@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   inter.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcatrix <kcatrix@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kevyn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 13:34:14 by kcatrix           #+#    #+#             */
-/*   Updated: 2021/12/06 15:50:22 by kcatrix          ###   ########.fr       */
+/*   Created: 2021/12/13 10:28:17 by kevyn             #+#    #+#             */
+/*   Updated: 2021/12/13 10:43:27 by kevyn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 
-int	strverif(char *strv, char no)
+#include <unistd.h>
+
+int		ft_verif(char val, char *str)
 {
 	int i;
 
 	i = 0;
-	while(strv[i])
+	while(str[i])
 	{
-		if(strv[i] == no)
+		if (str[i] == val)
 			return (0);
 		i++;
 	}
@@ -29,45 +29,42 @@ int	strverif(char *strv, char no)
 
 void	ft_inter(char *str, char *str2)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 	int z;
-	char res[100];
-
+	char res[250];
+	
 	i = 0;
 	y = 0;
 	z = 0;
-
 	while(str[i])
 	{
 		while(str2[y])
 		{
-			if (str[i] == str2[y] && (strverif(res, str2[y]) == 1))
+			if (str[i] == str2[y] && ft_verif(str[i], res) == 1)
 			{
-				res[z] =  str2[y];
+				res[z] = str[i];
 				z++;
 			}
 			y++;
 		}
-		i++;
 		y = 0;
+		i++;
 	}
 	res[z] = '\0';
 	i = 0;
-	while(res[i])
+	while (res[i])
 	{
 		write(1, &res[i], 1);
 		i++;
 	}
 	write(1, "\n", 1);
 }
+
 int main(int argc, char **argv)
 {
-	int i;
-	
-	i = 1;
-	if (argc != 3)
-		write(1,"\n",1);
+	if(argc != 3)
+		write(1, "\n", 1);
 	else
-    	ft_inter(argv[i], argv[i + 1]);
+		ft_inter(argv[1], argv[2]);
 }
